@@ -1,0 +1,12 @@
+{
+    "bbs_name": "My BBS",
+    "admin_id": "!abcd123",
+    "welcome_message": "Welcome to my Meshtastic BBS! Type 'help' for commands.",
+    "max_message_length": 200,
+    "message_retention_days": 7,
+    "bulletin_counter": 0,
+    "node_ip": "192.168.1.51",
+    "users": {},
+    "bulletins": [ ]
+}
+
