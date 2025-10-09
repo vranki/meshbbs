@@ -199,18 +199,22 @@ def main():
     global connection_lost
     try:
         while True:
-            connection_lost = False
-            interface = meshtastic.tcp_interface.TCPInterface(hostname=config.get("node_ip", "127.0.0.1")
-            pub.subscribe(on_receive, "meshtastic.receive")
-            pub.subscribe(on_disconnect, "meshtastic.connection.lost")
+            try:
+                connection_lost = False
+                interface = meshtastic.tcp_interface.TCPInterface(hostname=config.get("node_ip", "127.0.0.1"))
+                pub.subscribe(on_receive, "meshtastic.receive")
+                pub.subscribe(on_disconnect, "meshtastic.connection.lost")
 
-            print("Connected to Meshtastic device. Listening for messages...")
-            get_users(interface)
-            ourNode = interface.getNode(meshtastic.LOCAL_ADDR)
-            while not connection_lost:
-                time.sleep(0.1)
-            print("Connection lost. Reconnecting in 5 seconds...")
-            time.sleep(5)
+                print("Connected to Meshtastic device. Listening for messages...")
+                get_users(interface)
+                ourNode = interface.getNode(meshtastic.LOCAL_ADDR)
+                while not connection_lost:
+                    time.sleep(0.1)
+                print("Connection lost. Reconnecting in 5 seconds...")
+                time.sleep(5)
+            except OSError as e:
+                print(f"Connection error: {e}. Retrying in 5 seconds...")
+                time.sleep(5)
     except KeyboardInterrupt:
         pass
 
